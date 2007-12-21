@@ -51,7 +51,7 @@ public class Tool {
                     byte tag = raf.readByte();
                     switch (tag) {
                     case 1: // UTF-8
-                        raf.readUTF();
+                        raf.skipBytes(raf.readShort());
                         break;
                     case 3: // Integer
                     case 4: // Float
