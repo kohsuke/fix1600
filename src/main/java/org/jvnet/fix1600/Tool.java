@@ -51,7 +51,7 @@ public class Tool {
                     byte tag = raf.readByte();
                     switch (tag) {
                     case 1: // UTF-8
-                        raf.readUTF();
+                        raf.skipBytes(raf.readShort());
                         break;
                     case 3: // Integer
                     case 4: // Float
@@ -97,7 +97,9 @@ public class Tool {
     }
 
     public void processDirectory(File dir) throws IOException {
-        for( File f : dir.listFiles() )
+        File[] files = dir.listFiles();
+        if(files==null) return;
+        for( File f : files)
             process(f);
     }
 }
