@@ -25,6 +25,9 @@ public class FixMojo extends AbstractMojo {
     private MavenProject project;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if(project.getBuild()==null || project.getBuild().getOutputDirectory()==null)
+            return; // skip - no class files here
+
         File classesDir = new File(project.getBuild().getOutputDirectory());
         getLog().debug("outputDir="+classesDir);
 
