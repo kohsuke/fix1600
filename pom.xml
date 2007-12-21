@@ -4,15 +4,15 @@
   <groupId>org.jvnet.fix1600</groupId>
   <artifactId>fix1600</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.3-SNAPSHOT</version>
+  <version>1.3</version>
 
   <name>Fix 1600</name>
   <description>Changes class modifier from 0x1600 to 0x0600 to work around 1600</description>
   
   <scm>
-    <connection>scm:svn:https://svn.dev.java.net/svn/fix1600/trunk/fix1600</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/fix1600/trunk/fix1600</developerConnection>
-    <url>https://fix1600.dev.java.net/source/browse/fix1600/trunk/fix1600/</url>
+    <connection>scm:svn:https://svn.dev.java.net/svn/fix1600/tags/fix1600-1.3</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/fix1600/tags/fix1600-1.3</developerConnection>
+    <url>https://fix1600.dev.java.net/source/browse/fix1600/tags/fix1600-1.3</url>
   </scm>
 
   <repositories>
