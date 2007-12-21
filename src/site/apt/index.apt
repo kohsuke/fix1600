@@ -1,0 +1,76 @@
+What is this?
+
+    This tool works around {{{http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6553734}bug 6553734}},
+    which prevents <<<package-info.java>>> compiled by Java6 to be run on Java5 JVMs.
+    This tool does that by looking for offending 0x1600 class modifier and replace that with 0x0600
+    modifier.
+
+    For full analysis of the issue, see the {{{https://jaxb.dev.java.net/guide/Runtime_Errors.html#Illegal_class_modifiers_for_package_info__0x1600}JAXB users guide}}.
+
+Using it from Maven2
+
+    If you use Maven to build your project, you can configure this tool as a Maven plugin.
+    To do so, add the following entries to your POM:
+
+------------------------------
+  <build>
+    ...
+    <pllugins>
+      ...
+      <plugin>
+        <groupId>org.jvnet.fix1600</groupId>
+        <artifactId>fix1600</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>fix</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <pluginRepositories>
+    ...
+    <pluginRepository>
+      <id>maven2-repository.dev.java.net</id>
+      <name>Java.net Repository for Maven</name>
+      <url>http://download.java.net/maven/2/</url>
+    </pluginRepository>
+  </pluginRepositories>
+------------------------------
+
+    In this way the tool will automatically kicks in during the <<<process-classes>>> phase
+    and does the right thing.
+
+Using it from CLI
+
+    You can run this jar from the command line as follows:
+
+------------------------------
+$ java -jar fix1600.jar dir1 dir2 ...
+------------------------------
+
+    You can specify arbitrary number of directories or class files.
+
+    In this way the tool will recursively search all the directories and modifies
+    all the offending class files in place.
+
+Using it from Ant
+
+    You can call this tool from your build script as follows:
+
+------------------------------
+<taskdef name="fix1600" classname="org.jvnet.fix1600.FixTask">
+  <classpath>
+    <pathelement path="path/to/fix1600.jar"/>
+  </classpath>
+</taskdef>
+
+<fix1600 dir="path/to/build/classes" />
+------------------------------
+
+    The <<<fix16000>>> task is a {{{http://ant.apache.org/manual/dirtasks.html}MatchingTask}},
+    so you can use the standard fileset elements/attributes to include/exclude files to be
+    processed.
