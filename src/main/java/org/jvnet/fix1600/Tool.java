@@ -49,6 +49,7 @@ public class Tool {
                 int cpCount = raf.readShort();
                 for( int i=1; i<cpCount; i++ ) { // note that this is 1-origin
                     byte tag = raf.readByte();
+//                    System.out.println("pos "+i+" tag "+tag);
                     switch (tag) {
                     case 1: // UTF-8
                         raf.readUTF();
@@ -60,6 +61,7 @@ public class Tool {
                     case 5: // Long
                     case 6: // Double
                         raf.skipBytes(8);
+                        i++;    // they take up two constant pool index
                         break;
                     case 7: // Class
                         raf.skipBytes(2);
@@ -75,6 +77,8 @@ public class Tool {
                     case 12: // NameAndType
                         raf.skipBytes(4);
                         break;
+                    default:
+                        throw new IOException("Unexpected constant pool tag "+tag+" at "+i);
                     }
                 }
 
@@ -97,7 +101,9 @@ public class Tool {
     }
 
     public void processDirectory(File dir) throws IOException {
-        for( File f : dir.listFiles() )
+        File[] files = dir.listFiles();
+        if(files==null) return;
+        for( File f : files)
             process(f);
     }
 }
