@@ -97,7 +97,9 @@ public class Tool {
     }
 
     public void processDirectory(File dir) throws IOException {
-        for( File f : dir.listFiles() )
+        File[] files = dir.listFiles();
+        if(files==null) return;
+        for( File f : files)
             process(f);
     }
 }
